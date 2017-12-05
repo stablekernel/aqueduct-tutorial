@@ -7,7 +7,7 @@ class HeroesController extends RESTController {
 
   final ManagedContext context;
 
-  @Bind.get()
+  @Operation.get()
   Future<Response> getAllHeroes({@Bind.query("name") String name}) async {
     final heroQuery = new Query<Hero>(context);
     if (name != null) {
@@ -18,7 +18,7 @@ class HeroesController extends RESTController {
     return new Response.ok(heroes);
   }
 
-  @Bind.get()
+  @Operation.get("id")
   Future<Response> getHeroByID(@Bind.path("id") int id) async {
     final heroQuery = new Query<Hero>(context)
       ..where.id = whereEqualTo(id);
@@ -29,15 +29,5 @@ class HeroesController extends RESTController {
       return new Response.notFound();
     }
     return new Response.ok(hero);
-  }
-
-  @Bind.post()
-  Future<Response> createHero(@Bind.body() Hero hero) async {
-    final query = new Query<Hero>()
-      ..values.name = hero.name;
-
-    final insertedHero = await query.insert();
-
-    return new Response.ok(insertedHero);
   }
 }
