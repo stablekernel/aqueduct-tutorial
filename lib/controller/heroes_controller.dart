@@ -15,12 +15,12 @@ class HeroesController extends RESTController {
     {'id': 20, 'name': 'Tornado'}
   ];
 
-  @Bind.get()
+  @Operation.get()
   Future<Response> getAllHeroes() async {
     return new Response.ok(heroes);
   }
 
-  @Bind.get()
+  @Operation.get("id")
   Future<Response> getHeroByID(@Bind.path("id") int id) async {
     final hero =
     heroes.firstWhere((hero) => hero['id'] == id, orElse: () => throw new HTTPResponseException(404, "no hero"));
