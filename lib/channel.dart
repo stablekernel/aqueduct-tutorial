@@ -31,7 +31,7 @@ class HeroesChannel extends ApplicationChannel {
 
     router
       .route("/heroes/[:id]")
-      .generate(() => new HeroesController(context));
+      .link(() => new HeroesController(context));
 
     return router;
   }
