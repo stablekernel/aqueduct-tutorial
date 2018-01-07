@@ -8,11 +8,6 @@ class HeroesController extends RESTController {
     {'id': 13, 'name': 'Bombasto'},
     {'id': 14, 'name': 'Celeritas'},
     {'id': 15, 'name': 'Magneta'},
-    {'id': 16, 'name': 'RubberMan'},
-    {'id': 17, 'name': 'Dynama'},
-    {'id': 18, 'name': 'Dr IQ'},
-    {'id': 19, 'name': 'Magma'},
-    {'id': 20, 'name': 'Tornado'}
   ];
 
   @Operation.get()
@@ -22,8 +17,10 @@ class HeroesController extends RESTController {
 
   @Operation.get("id")
   Future<Response> getHeroByID(@Bind.path("id") int id) async {
-    final hero =
-    heroes.firstWhere((hero) => hero['id'] == id, orElse: () => throw new HTTPResponseException(404, "no hero"));
+    final hero = heroes.firstWhere((hero) => hero['id'] == id, orElse: () => null);
+    if (hero == null) {
+      return new Response.notFound();
+    }
 
     return new Response.ok(hero);
   }
